@@ -22,3 +22,9 @@ type Book struct {
 	ID    primitive.ObjectID `bson:"_id"`
 	Title string `bson:"title"`
 }
+
+type Person struct {
+	ID   primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	Name string             `json:"name" bson:"name"`
+	Age  int                `json:"age" bson:"age"`
+}
