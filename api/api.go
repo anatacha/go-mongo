@@ -17,5 +17,6 @@ func Register() {
 	data.Post("", v1.InsertDataEP)
 	data.Put("/:id", v1.UpdateUserEP)
 	data.Get("/:id", v1.UserByIdEP)
+	version1.Get("/pdfd", v1.PdfEP)
 	logrus.Fatal(app.Listen(":3000"))
 }

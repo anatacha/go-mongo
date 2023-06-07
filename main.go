@@ -11,6 +11,7 @@ import (
 	"go_mon/database"
 	m "go_mon/model"
 
+
 	// "go_mon/setting"
 
 	// "github.com/patcharp/golib/requests"
@@ -74,6 +75,7 @@ func main() {
 	createCollectionWithSchema()
 	// 3x cmd => load env data,connect mongo,migrate collection,api
 	cmdStartServer()
+
 }
 
 func cmdStartServer() error {

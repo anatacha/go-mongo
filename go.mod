@@ -5,7 +5,7 @@ go 1.20
 require (
 	github.com/gofiber/fiber/v2 v2.46.0
 	// github.com/patcharp/golib/v2 v2.0.8
-	github.com/sirupsen/logrus v1.9.2
+	github.com/sirupsen/logrus v1.9.3
 	go.mongodb.org/mongo-driver v1.11.6
 	gorm.io/gorm v1.25.1
 )
@@ -43,11 +43,17 @@ require (
 	golang.org/x/text v0.9.0 // indirect
 )
 
+require github.com/pdfcpu/pdfcpu v0.4.1
+
 require (
+	github.com/boombuler/barcode v1.0.1 // indirect
 	github.com/carlescere/scheduler v0.0.0-20170109141437-ee74d2f83d82 // indirect
 	github.com/denisenkom/go-mssqldb v0.9.0 // indirect
+	github.com/go-pdf/fpdf v0.8.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/golang-sql/civil v0.0.0-20190719163853-cb61b32ac6fe // indirect
+	github.com/hhrutter/lzw v1.0.0 // indirect
+	github.com/hhrutter/tiff v1.0.0 // indirect
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.8.1 // indirect
 	github.com/jackc/pgio v1.0.0 // indirect
@@ -57,6 +63,10 @@ require (
 	github.com/jackc/pgtype v1.7.0 // indirect
 	github.com/jackc/pgx/v4 v4.11.0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.5 // indirect
+	github.com/phpdave11/gofpdi v1.0.13 // indirect
+	github.com/ruudk/golang-pdf417 v0.0.0-20201230142125-a7e3863a1245 // indirect
+	golang.org/x/image v0.7.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gorm.io/driver/mysql v1.1.1 // indirect
 	gorm.io/driver/postgres v1.1.0 // indirect
 	gorm.io/driver/sqlite v1.1.4 // indirect

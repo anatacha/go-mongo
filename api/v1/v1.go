@@ -6,8 +6,16 @@ import (
 	"go_mon/database"
 	m "go_mon/model"
 
+	// "github.com/go-pdf/fpdf"go
 	"github.com/gofiber/fiber/v2"
 	"github.com/patcharp/golib/v2/helper"
+
+	// "github.com/pdfcpu/pdfcpu/pkg/api"
+	"os/exec"
+
+	"github.com/go-pdf/fpdf"
+	"github.com/sirupsen/logrus"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -103,4 +111,17 @@ func UserByIdEP(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"error": "User not found"})
 	}
 	return c.JSON(persons)
+}
+
+func PdfEP(c *fiber.Ctx) error {
+	pdf := fpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+	pdf.SetFont("Arial", "B", 16)
+	pdf.Cell(40, 10, "Hello, world")
+	err := pdf.OutputFileAndClose("hello.pdf")
+	errors := exec.Command("xdg-open", "hello.pdf").Start()
+	if err != nil {
+		logrus.Fatal(errors)
+	}
+	return err
 }
