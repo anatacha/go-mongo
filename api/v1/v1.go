@@ -3,7 +3,7 @@ package v1
 import (
 	// "fmt"
 	"context"
-	"go_mon/database"
+	"go_mon/service"
 	m "go_mon/model"
 
 	"github.com/gofiber/fiber/v2"
@@ -25,7 +25,7 @@ func InsertDataEP(c *fiber.Ctx) error {
 	if err := c.BodyParser(&persons); err != nil {
 		return err
 	}
-	personsCollection := database.DB.Collection("persons")
+	personsCollection := service.DB.Collection("persons")
 	_, err := personsCollection.InsertOne(context.Background(), persons)
 	if err != nil {
 		return err
@@ -37,7 +37,7 @@ func InsertDataEP(c *fiber.Ctx) error {
 
 func GetPersonEP(c *fiber.Ctx) error {
 
-	collection := database.DB.Collection("persons")
+	collection := service.DB.Collection("persons")
 	// bson.M{"name": "data1"}
 	dataAll, err := collection.Find(context.Background(), bson.M{})
 	if err != nil {
@@ -56,7 +56,7 @@ func GetPersonEP(c *fiber.Ctx) error {
 func UpdateUserEP(c *fiber.Ctx) error {
 
 	id := c.Params("id")
-	collection := database.DB.Collection("persons")
+	collection := service.DB.Collection("persons")
 
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
@@ -89,7 +89,7 @@ func UpdateUserEP(c *fiber.Ctx) error {
 
 func UserByIdEP(c *fiber.Ctx) error {
 	id := c.Params("id")
-	collection := database.DB.Collection("persons")
+	collection := service.DB.Collection("persons")
 
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {

@@ -68,28 +68,29 @@ func createCollectionWithSchema() error {
 }
 
 func main() {
+	// 1x Load env setting
 	setting.GetCfg().Load()
-	// 1x Connect Db
-	// database.Connect()
+	// 2x Connect Db
 	service.InitDb()
-	// 2x สร้าง Collection names and schemas
+	// 3x สร้าง Collection names and schemas
 	createCollectionWithSchema()
-	// 3x cmd => load env data,connect mongo,migrate collection,api
+	// 4x cmd => load env data,connect mongo,migrate collection,api
 	cmdStartServer()
 
 }
 
 func cmdStartServer() error {
+	// 1x load setting data env
 	if err := setting.GetCfg().Load(); err != nil {
 		return err
 	}
-	// Connect DB
+	// 2x Connect MongoDB
 	if err := service.InitDb(); err != nil {
 		return err
 	}
-	// Migrate
+	// 3x Migrate
 	createCollectionWithSchema()
-	// Api
+	// 4x Router Api
 	api.Register()
 	return nil
 }

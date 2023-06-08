@@ -7,36 +7,28 @@ import (
 	// "os"
 	"go_mon/setting"
 
-	"github.com/patcharp/golib/v2/util"
 	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var (
-	DB     *mongo.Database
-	getEnv = util.GetEnv
+	DB *mongo.Database
 )
 
 func InitDb() error {
-	// dbPort := getEnv("DB_PORT", "27017")
+	// dbHost := getEnv("DB_HOST", "127.0.0.1")
 	// dbPort := getEnv("DB_PORT", "27017")
 	// dbName := getEnv("DB_NAME", "golang-test")
 
 	dbHost := setting.GetCfg().Db.Host
-	// if err := setting.GetCfg().Load(); err != nil {
-	// 	return err
-	// }
-	// dbHost := getEnv("DB_HOST", "127.0.0.1")
 	dbPort := setting.GetCfg().Db.Port
-	// dbName := setting.GetCfg().Db.Name
-	dbName := getEnv("DB_NAME", "golang-test")
+	dbName := setting.GetCfg().Db.Name
 
-	// test := setting.GetCfg().DbHost
-	// logrus.Infoln(test)
-	// dbName := os.Getenv("DB_NAME")
-	connectionURI := fmt.Sprintf("mongodb://%s:%s", dbHost, dbPort)
-	clientOptions := options.Client().ApplyURI(connectionURI)
+	// connectionURI := fmt.Sprintf("mongodb://%s:%s", dbHost, dbPort)
+	connectMongo := constructMongoDBConnectionString(dbHost, dbPort)
+	logrus.Infoln(connectMongo)
+	clientOptions := options.Client().ApplyURI(connectMongo)
 	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		logrus.Fatal(err)
@@ -45,4 +37,10 @@ func InitDb() error {
 	// DB = client.Database("golang-test")
 	DB = client.Database(dbName)
 	return nil
+}
+
+// Function to construct MongoDB connection string
+func constructMongoDBConnectionString(host, port string) string {
+	return fmt.Sprintf("mongodb://%s:%s", host, port)
+
 }
