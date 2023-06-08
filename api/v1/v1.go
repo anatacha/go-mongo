@@ -3,17 +3,19 @@ package v1
 import (
 	// "fmt"
 	"context"
-	"go_mon/service"
 	m "go_mon/model"
+	"go_mon/service"
+	"path/filepath"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/patcharp/golib/v2/helper"
 
 	// "github.com/pdfcpu/pdfcpu/pkg/api"
-	"os/exec"
+	"os"
+	// "os/exec"
 
 	"github.com/go-pdf/fpdf"
-	"github.com/sirupsen/logrus"
+	// "github.com/sirupsen/logrus"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -117,11 +119,21 @@ func PdfEP(c *fiber.Ctx) error {
 	pdf.AddPage()
 	pdf.SetFont("Arial", "B", 16)
 	pdf.Cell(40, 10, "Hello, world")
-	err := pdf.OutputFileAndClose("hello.pdf")
-	errors := exec.Command("xdg-open", "hello.pdf").Start()
-	if err != nil {
-		logrus.Fatal(errors)
+	folderPath := "pdf"
+	fileName := "hello.pdf"
+	filePath := filepath.Join(folderPath, fileName)
+	err := pdf.OutputFileAndClose(filePath)
+	// Check if the folder exists, and create it if it doesn't
+	if _, err := os.Stat(folderPath); os.IsNotExist(err) {
+		err := os.MkdirAll(folderPath, 0755)
+		if err != nil {
+			return err
+		}
 	}
+	// errors := exec.Command("xdg-open", "hello.pdf").Start()
+	// if err != nil {
+	// 	logrus.Fatal(errors)
+	// }
 	return err
 }
 
@@ -131,7 +143,6 @@ func PdfFileEP(c *fiber.Ctx) error {
 	pdf.SetFont("Arial", "B", 16)
 	pdf.Cell(40, 10, "Hello, world")
 	pdf.ImageOptions("Add.pdf", 0, 0, 210, 297, false, fpdf.ImageOptions{}, 0, "")
-
 
 	return nil
 }
