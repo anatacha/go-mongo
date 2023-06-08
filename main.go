@@ -8,11 +8,10 @@ import (
 
 	// "fmt"
 	"go_mon/api"
-	"go_mon/database"
 	m "go_mon/model"
+	"go_mon/service"
 
-
-	// "go_mon/setting"
+	"go_mon/setting"
 
 	// "github.com/patcharp/golib/requests"
 	// "go.mongodb.org/mongo-driver/mongo/readpref"
@@ -26,7 +25,7 @@ import (
 // 2).สร้าง collection ยังไง
 
 func createCollectionWithSchema() error {
-	db := database.DB
+	db := service.DB
 	// ==CreateMany==
 	// 1x สร้าง arr struct เก็บค่า ชื่อcollection กับ schema
 	collections := []struct {
@@ -69,8 +68,10 @@ func createCollectionWithSchema() error {
 }
 
 func main() {
+	setting.GetCfg().Load()
 	// 1x Connect Db
-	database.Connect()
+	// database.Connect()
+	service.InitDb()
 	// 2x สร้าง Collection names and schemas
 	createCollectionWithSchema()
 	// 3x cmd => load env data,connect mongo,migrate collection,api
@@ -79,8 +80,13 @@ func main() {
 }
 
 func cmdStartServer() error {
-	// Connect
-	database.Connect()
+	if err := setting.GetCfg().Load(); err != nil {
+		return err
+	}
+	// Connect DB
+	if err := service.InitDb(); err != nil {
+		return err
+	}
 	// Migrate
 	createCollectionWithSchema()
 	// Api

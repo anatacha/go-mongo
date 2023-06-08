@@ -6,7 +6,6 @@ import (
 	"go_mon/database"
 	m "go_mon/model"
 
-	// "github.com/go-pdf/fpdf"go
 	"github.com/gofiber/fiber/v2"
 	"github.com/patcharp/golib/v2/helper"
 
@@ -124,4 +123,15 @@ func PdfEP(c *fiber.Ctx) error {
 		logrus.Fatal(errors)
 	}
 	return err
+}
+
+func PdfFileEP(c *fiber.Ctx) error {
+	pdf := fpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+	pdf.SetFont("Arial", "B", 16)
+	pdf.Cell(40, 10, "Hello, world")
+	pdf.ImageOptions("Add.pdf", 0, 0, 210, 297, false, fpdf.ImageOptions{}, 0, "")
+
+
+	return nil
 }
